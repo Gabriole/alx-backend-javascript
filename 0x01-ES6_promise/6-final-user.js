@@ -1,3 +1,6 @@
+import signUpUser from './4-user-promise';
+import uploadPhoto from './5-photo-reject';
+
 export default function handleProfileSignup(firstName, lastName, fileName) {
   return Promise.allSettled([
     signUpUser(firstName, lastName),
@@ -5,7 +8,7 @@ export default function handleProfileSignup(firstName, lastName, fileName) {
   ]).then((results) => {
     return results.map((result) => ({
       status: result.status,
-      value: result.status === 'fulfilled' ? result.value : result.reason,  // Keep the error as-is
+      value: result.status === 'fulfilled' ? result.value : result.reason.toString(),
     }));
   });
 }
