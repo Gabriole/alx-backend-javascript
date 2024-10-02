@@ -1,17 +1,18 @@
-import { uploadPhoto, createUser } from './utils';
+import signUpUser from './4-user-promise';
+import uploadPhoto from './5-photo-reject';
 
-export default async function asyncUploadUser() {
+export default async function handleProfileSignup(firstName, lastName, fileName) {
   try {
-    const photo = await uploadPhoto();
-    const user = await createUser();
+    const user = await signUpUser(firstName, lastName);
+    const photo = await uploadPhoto(fileName);
     return {
-      photo: photo,
-      user: user,
+      user,
+      photo,
     };
   } catch (error) {
     return {
-      photo: null,
       user: null,
+      photo: null,
     };
   }
 }
