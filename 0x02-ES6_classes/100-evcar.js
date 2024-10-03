@@ -1,14 +1,19 @@
 import Car from './10-car.js';
 
-class TestCar extends Car {}
+export default class EVCar extends Car {
+  constructor(brand, motor, color, range) {
+    // Call the Car class constructor with brand, motor, and color
+    super(brand, motor, color);
+    this._range = range; // Additional attribute specific to EVCar
+  }
 
-const tc1 = new TestCar("Nissan", "Turbo", "Pink");
-const tc2 = tc1.cloneCar();
+  // Getter for range
+  get range() {
+    return this._range;
+  }
 
-console.log(tc1);  // TestCar { _brand: 'Nissan', _motor: 'Turbo', _color: 'Pink' }
-console.log(tc1 instanceof TestCar);  // true
-
-console.log(tc2);  // TestCar { _brand: 'Nissan', _motor: 'Turbo', _color: 'Pink' }
-console.log(tc2 instanceof TestCar);  // true
-
-console.log(tc1 == tc2);  // false, they are different objects
+  // Override cloneCar to return a Car object, not an EVCar
+  cloneCar() {
+    return new Car(this._brand, this._motor, this._color);
+  }
+}
