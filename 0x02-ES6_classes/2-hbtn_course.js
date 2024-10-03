@@ -1,53 +1,67 @@
 export default class HolbertonCourse {
   constructor(name, length, students) {
+    this._checkType(name, 'string', 'Name');
+    this._checkType(length, 'number', 'Length');
+    this._checkType(students, 'array', 'Students');
     this._name = name;
     this._length = length;
     this._students = students;
-
-    // Validate types during construction
-    this.validateAttributes();
   }
 
-  // Getter and setter for name
   get name() {
     return this._name;
   }
 
-  set name(value) {
-    if (typeof value !== 'string') {
-      throw new TypeError('Name must be a string');
-    }
-    this._name = value;
+  set name(name) {
+    this._checkType(name, 'string', 'Name');
+    this._name = name;
   }
 
-  // Getter and setter for length
   get length() {
     return this._length;
   }
 
-  set length(value) {
-    if (typeof value !== 'number') {
-      throw new TypeError('Length must be a number');
-    }
-    this._length = value;
+  set length(length) {
+    this._checkType(length, 'number', 'Length');
+    this._length = length;
   }
 
-  // Getter and setter for students
   get students() {
     return this._students;
   }
 
-  set students(value) {
-    if (!Array.isArray(value) || !value.every(student => typeof student === 'string')) {
-      throw new TypeError('Students must be an array of strings');
-    }
-    this._students = value;
+  set students(students) {
+    this._checkType(students, 'array', 'Students');
+    students.forEach((student) => this._checkType(student, 'string', 'Students'));
+    this._students = students;
   }
 
-  // Method to validate constructor attributes
-  validateAttributes() {
-    this.name = this._name;
-    this.length = this._length;
-    this.students = this._students;
+  // eslint-disable-next-line class-methods-use-this
+  _checkType(value, type, variableName, errorMessageParam) {
+    let errorMessage = errorMessageParam;
+    if (!errorMessage) {
+      switch (type) {
+        case 'string':
+          errorMessage = `${variableName} must be a string`;
+          break;
+        case 'number':
+          errorMessage = `${variableName} must be a number`;
+          break;
+        case 'array':
+          errorMessage = `${variableName} must be an array of strings`;
+          break;
+        default:
+          errorMessage = 'Invalid type';
+      }
+    }
+
+    if (type === 'array') {
+      if (!Array.isArray(value) || !value.every((item) => typeof item === 'string')) {
+        throw new TypeError(errorMessage);
+      }
+      // eslint-disable-next-line valid-typeof
+    } else if (typeof value !== type) {
+      throw new TypeError(errorMessage);
+    }
   }
 }
