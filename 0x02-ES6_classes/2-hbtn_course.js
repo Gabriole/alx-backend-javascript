@@ -4,16 +4,15 @@ export default class HolbertonCourse {
     this._length = length;
     this._students = students;
 
-    // Validate types during object creation
+    // Validate types during construction
     this.validateAttributes();
   }
 
-  // Getter for name
+  // Getter and setter for name
   get name() {
     return this._name;
   }
 
-  // Setter for name with validation
   set name(value) {
     if (typeof value !== 'string') {
       throw new TypeError('Name must be a string');
@@ -21,12 +20,11 @@ export default class HolbertonCourse {
     this._name = value;
   }
 
-  // Getter for length
+  // Getter and setter for length
   get length() {
     return this._length;
   }
 
-  // Setter for length with validation
   set length(value) {
     if (typeof value !== 'number') {
       throw new TypeError('Length must be a number');
@@ -34,12 +32,11 @@ export default class HolbertonCourse {
     this._length = value;
   }
 
-  // Getter for students
+  // Getter and setter for students
   get students() {
     return this._students;
   }
 
-  // Setter for students with validation
   set students(value) {
     if (!Array.isArray(value) || !value.every(student => typeof student === 'string')) {
       throw new TypeError('Students must be an array of strings');
